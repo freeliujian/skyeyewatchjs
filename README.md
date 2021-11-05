@@ -11,5 +11,12 @@
 npm install skyeyewatchjs --dev 
 
 ### 非集成方法
+git clone https://github.com/freeliujian/skyeyewatchjs
+
+npm install or yarn install
+
+npm link
+
+skyeyewatchjs
 
 
