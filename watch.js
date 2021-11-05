@@ -1,6 +1,8 @@
 const chokidar = require('chokidar')
 const childProcess = require('child_process');
 const path = require('path')
+const chalk = require('chalk');
+
 
 const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm'
 let watcher = null
@@ -8,94 +10,122 @@ let ready = false
 
 let chunk = null;
 
+let start = null ;
 
-const spaws = function () {
-    let compile = null;
-    console.log('开始编译')
-    //编译目录
-    compile
-        = childProcess.spawn(npm, ['run', 'build'], { cwd: path.resolve(process.cwd(), './test') });
+const spawsStart = function(){
+    start
+    = childProcess.spawn(npm, ['run', 'start'], { cwd: path.resolve(process.cwd(), './test') });
 
-
+    
     //编译结果打印
-    compile.stderr.on('data', function (data) {
+    start.stderr.on('data', function (data) {
         chunk += data
+       
     });
 
-    compile.on('error', (err) => {
+    start.on('error', (err) => {
         console.log(err);
     });
 
-    compile.on('close', code => {
-        console.log(chunk)
-        console.log('🎉 build success')
+    start.on('close', code => {
+        console.log(chalk.green(chunk))
+        console.log(chalk.red('🎉 ------- md --------'))
     })
 }
 
+module.exports.spawsStart=spawsStart
+
+// const spaws = function () {
+//     let compile = null;
+//     console.log('开始编译')
+//     //编译目录
+//     compile
+//         = childProcess.spawn(npm, ['run', 'build:client'], { cwd: path.resolve(process.cwd(), './test') });
+
+
+//     //编译结果打印
+//     compile.stderr.on('data', function (data) {
+//         chunk += data
+       
+    
+//     });
+
+//     compile.on('error', (err) => {
+//         console.log(err);
+//     });
+
+//     compile.on('close', code => {
+      
+//         console.log(chalk.green('🎉 complete success'));
+//         console.log(chalk.green('编译结束，正在重新启动项目'))
+//         spawsStart()
+//     })
+// }
 
 
 
 
-module.exports.watch = function () {
 
-    // 文件新增时
-    function addFileListener(path_) {
-        if (ready) {
-            console.log('File', path_, '🔨 has been added')
+// module.exports.watch = function () {
 
-            spaws()
-        }
-    }
-    function addDirecotryListener(path) {
-        if (ready) {
-            console.log('Directory', path, '🔨 has been added')
+//     // 文件新增时
+//     function addFileListener(path_) {
+//         if (ready) {
+//             console.log('File', path_, '🔨 has been added')
+
+//             spaws()
+//         }
+//     }
+//     function addDirecotryListener(path) {
+//         if (ready) {
+//             console.log('Directory', path, '🔨 has been added')
             
-            spaws()
-        }
-    }
+//             spaws()
+//         }
+//     }
 
-    // 文件内容改变时
-    function fileChangeListener(path_) {
+//     // 文件内容改变时
+//     function fileChangeListener(path_) {
 
 
-        console.log('File', path_, '🎨 has been changed 💄')
+//         console.log('File', path_, '🎨 has been changed 💄')
         
-        spaws()
-    }
+//         spaws()
+//     }
 
-    // 删除文件时，需要把文件里所有的用例删掉
-    function fileRemovedListener(path_) {
-        console.log('File', path_, '🔥 has been removed')
+//     // 删除文件时，需要把文件里所有的用例删掉
+//     function fileRemovedListener(path_) {
+//         console.log('File', path_, '🔥 has been removed')
         
-        spaws()
-    }
+//         spaws()
+//     }
 
-    // 删除目录时
-    function directoryRemovedListener(path) {
+//     // 删除目录时
+//     function directoryRemovedListener(path) {
 
-        console.info('Directory', path, '🔥 has been removed')
+//         console.info('Directory', path, '🔥 has been removed')
         
-        spaws()
-    }
+//         spaws()
+//     }
 
 
-    //监听文件
-    if (!watcher) {
-        watcher = chokidar.watch('./test/src')
-    }
+//     //监听文件
+//     if (!watcher) {
+//         watcher = chokidar.watch('./test/src')
+//     }
 
 
-    watcher
-        .on('add', addFileListener)
-        .on('addDir', addDirecotryListener)
-        .on('change', fileChangeListener)
-        .on('unlink', fileRemovedListener)
-        .on('unlinkDir', directoryRemovedListener)
-        .on('error', function (error) {
-            console.info('Error happened', error);
-        })
-        .on('ready', function () {
-            console.info('Initial scan complete. Ready for changes.');
-            ready = true
-        })
-}
+//     watcher
+//         .on('add', addFileListener)
+//         .on('addDir', addDirecotryListener)
+//         .on('change', fileChangeListener)
+//         .on('unlink', fileRemovedListener)
+//         .on('unlinkDir', directoryRemovedListener)
+//         .on('error', function (error) {
+//             console.info('Error happened', error);
+//         })
+//         .on('ready', function () {
+//             console.info('Initial scan complete. Ready for changes.');
+//             ready = true
+//         })
+// }
