@@ -1,0 +1,18 @@
+{
+  "name": "skyeyewatchjs",
+  "version": "1.0.0",
+  "description": "监听文件变化模拟热更新",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build":"node test.js"
+  },
+  "bin": {
+    "skyeyewatchjs": "bin.js"
+  },
+  "author": "littleforest",
+  "license": "ISC",
+  "dependencies": {
+    "chokidar": "^3.5.2"
+  }
+}

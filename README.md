@@ -1,30 +1,15 @@
-# tstoresx
+# 说明
 
-国际化根据ts文件创建resx文件
+### 因为公司项目没有热更新，自己在项目外写了一个热更新编译脚本
 
-## 使用说明
+## 使用方法
 
-直接输入指令：tstoresx
+### 备注（可以集成到项目里面去，但是不推荐，因为不知道会有啥bug）
 
-## 查看版本
+### 集成方法 
 
-tstoresx -v 或 tstoresx vsersion
+npm install skyeyewatchjs --dev 
 
-### 如何使用
-npm install --dev tstoresx or yarn add --dev tstoresx
-
-## 配置文件
-
-### 名称
-.tstoresx.ts 
-
-### 示例
-
-const config = {
-    //需要转换的文件路径
-    path:'./src/locales/zh-CN.ts'
-};
-
-exports.config = config;
+### 非集成方法
 
 
