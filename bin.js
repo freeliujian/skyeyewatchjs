@@ -5,7 +5,5 @@ console.log('✨ start ⚡️');
 
 const {watch,spawsStart} = require('./watch');
 
-
-
-watch();
-//spawsStart();
+//watch();
+spawsStart();

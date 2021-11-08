@@ -2,25 +2,50 @@ const childProcess = require('child_process');
 const chokidar = require('chokidar')
 const path = require('path')
 const chalk = require('chalk');
-
+const {config} = require('./config')
 const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm'
+
+const port = config.port
+
+
+//监听
 let watcher = null
-let ready = false
-let chunk = null;
+//监听是否准备
+let ready = false;
+//准备
 let start = null ;
+//编译
+let compile = null;
+//关闭端口
+let closeProt = null;
+
+
+let closeProtFlag = false;
 
 const spawsStart = function(){
-
+    
     start
     = childProcess.spawn(npm, ['run', 'start'], { cwd: path.resolve(process.cwd(), './test'),stdio:'inherit' });
+
     start.on('close', code => {
-        console.log(chalk.red('🎉 ------- start --------'))
+
+        console.log('message:'+code);
+
     })
 }
 
+const closeProt = function(){
+    console.log(port)
+    closeProt
+    = childProcess.spawn('lsof',['-i',':'+port])
+
+    closeProt.stdout
+
+
+}
 
 const spaws = function () {
-    let compile = null;
+  
     console.log('开始编译')
     //编译目录
     compile
@@ -98,4 +123,5 @@ const watch = function (){
 
 
 module.exports.watch =watch;
-module.exports.spawsStart=spawsStart
+module.exports.spawsStart=spawsStart;
+module.exports.closeProt = closeProt;
