@@ -8,8 +8,6 @@ const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm'
 const port = config.port
 
 
-//监听
-let watcher = null
 //监听是否准备
 let ready = false;
 //准备
