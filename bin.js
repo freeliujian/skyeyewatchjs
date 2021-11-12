@@ -12,7 +12,6 @@ console.log('✨ start ⚡️');
 
 process.env.npm = npm
 
-
-//watch();
+watch();
 //spawsStart();
-closeProt()
+//closeProt()

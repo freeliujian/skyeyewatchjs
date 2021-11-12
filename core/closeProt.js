@@ -12,11 +12,10 @@ const closeProt = function () {
     //端口号
     let closeProtNum = 0;
 
-
-
     getPortSpwn = childProcess.execSync('netstat -ano | findstr :'+port).toString()
+
     closeProtNum = getPortSpwn.replace(/\s/g,"").split('G')[getPortSpwn.replace(/\s/g,"").split('G').length-1]
-    console.log(closeProtNum)
+   
     closeProtSpwn
         = childProcess.spawn('taskkill', ['/PID',closeProtNum,'/F'], { stdio: 'inherit' });
     closeProtSpwn.on('close', code => {
